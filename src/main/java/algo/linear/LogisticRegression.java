@@ -2,6 +2,8 @@ package algo.linear;
 
 import algo.base.Classifiler;
 
+import java.util.Random;
+
 public class LogisticRegression implements Classifiler {
     private boolean inception;
     private boolean verbose;
@@ -70,8 +72,11 @@ public class LogisticRegression implements Classifiler {
         }
         updateProbas(xTrain);
         double originLoss = getLoss(xTrain, labels), currentLoss;
+        // 记录最终迭代的次数
+        int iter = 0;
         for (int i = 0; i < maxIter; i++) {
             update(xTrain, labels);
+            updateProbas(xTrain);
             currentLoss = getLoss(xTrain, labels);
             if ((i + 1) % 100 == 0 && verbose) {
                 System.out.println(String.format("iter:[%d/%d], currentLoss: %.5f", i+1, maxIter, currentLoss));
@@ -80,8 +85,9 @@ public class LogisticRegression implements Classifiler {
             if (temp > 0 && (Math.abs(temp / originLoss) < eps)) {
                 break;
             }
-            updateProbas(xTrain);
+            iter = i + 1;
         }
+        System.out.println(String.format("the algorithm stops at iteration: %d", iter));
     }
 
     private double log(double value) {

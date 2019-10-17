@@ -1,1 +1,4 @@
-algo\demo\App.class
+algo/linear/LogisticRegression.class
+algo/Utils.class
+algo/demo/App.class
+algo/base/Classifiler.class

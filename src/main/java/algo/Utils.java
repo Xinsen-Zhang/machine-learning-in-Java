@@ -7,20 +7,21 @@ import java.util.*;
 public class Utils {
     private static double[][] data;
     private static String[] rawLabels;
-    private static int[] labels;
+    private static double[] y;
     private static Map<String, List<Integer>> class2indices;
     private static int nRows;
     private static int featureNum = 0;
     private static double[][] xTrain;
     private static double[][] xEval;
-    private static int[] yEval;
-    private static int[] yTrain;
+    private static double[] yEval;
+    private static double[] yTrain;
     public static void readClassificationData(String dataName, int classNum) throws FileNotFoundException {
         String line = null;
         String[] tmp = null;
         if (dataName.equals("iris")) {
             class2indices = new HashMap<>();
             // 获取数据的条数
+            nRows = 0;
             FileInputStream fileInputStream = new FileInputStream("./data/iris.data");
             Scanner scanner = new Scanner(fileInputStream);
             while (scanner.hasNext()) {
@@ -92,7 +93,7 @@ public class Utils {
                 index++;
             }
         }
-        shuffle(indexOrder);
+        // shuffle(indexOrder);
         length = indexOrder.length;
         data = new double[length][];
         rawLabels = new String[length];
@@ -100,7 +101,7 @@ public class Utils {
             data[i] = dataTmp[indexOrder[i]];
             rawLabels[i] = rawLabelsTmp[indexOrder[i]];
         }
-        labels = new int[length];
+        y = new double[length];
         Map<String, Integer> class2Label = new HashMap<>();
         iterator = class2indices.entrySet().iterator();
         index = 0;
@@ -112,9 +113,40 @@ public class Utils {
             }
         }
         for (int i = 0 ; i < length; i++) {
-            labels[i] = class2Label.get(rawLabels[i]);
+            y[i] = class2Label.get(rawLabels[i]);
         }
-        System.out.println("Successfully");
+    }
+
+    public static void readRegressionData(String dataName) throws FileNotFoundException {
+        String line = null;
+        if (dataName.equals("boston")) {
+            // to get the nLines
+            nRows = 0;
+            FileInputStream fileInputStream = new FileInputStream("./data/housing.data");
+            Scanner scanner = new Scanner(fileInputStream);
+            while (scanner.hasNextLine()) {
+                nRows++;
+                line = scanner.nextLine();
+            }
+            featureNum = line.trim().split(",").length - 1;
+            System.out.println(String.format("boston housing data has %d records", nRows));
+            // parse data
+            fileInputStream = new FileInputStream("./data/housing.data");
+            scanner = new Scanner(fileInputStream);
+            data = new double[nRows][featureNum];
+            y = new double[nRows];
+            int index = 0;
+            String [] tmp = null;
+            while (scanner.hasNextLine()) {
+                line = scanner.nextLine();
+                tmp = line.trim().split(",");
+                for (int i = 0; i < featureNum; i++) {
+                    data[index][i] = Double.valueOf(tmp[i]);
+                }
+                y[index] = Double.valueOf(tmp[featureNum]);
+                index++;
+            }
+        }
     }
 
     private static  void shuffle(int [] indices) {
@@ -154,10 +186,10 @@ public class Utils {
         int size = data.length;
         int evalNum = (int)(size * testSize);
         xEval = new double[evalNum][];
-        yEval = new int[evalNum];
+        yEval = new double[evalNum];
         int trainNum = size - evalNum;
         xTrain = new double[trainNum][];
-        yTrain = new int[trainNum];
+        yTrain = new double[trainNum];
         int[] indices = new int[size];
         for (int i = 0; i < size; i++) {
             indices[i] = i;
@@ -167,16 +199,16 @@ public class Utils {
         }
         for (int i = 0; i < trainNum; i++) {
             xTrain[i] = data[indices[i]];
-            yTrain[i] = labels[indices[i]];
+            yTrain[i] = y[indices[i]];
         }
         for (int i = 0; i < evalNum; i++) {
             xEval[i] = data[indices[i + trainNum]];
-            yEval[i] = labels[indices[i + trainNum]];
+            yEval[i] = y[indices[i + trainNum]];
         }
     }
 
-    public static int[] getLabels() {
-        return labels;
+    public static double[] getY() {
+        return y;
     }
 
     public static double[][] getxTrain() {
@@ -187,11 +219,50 @@ public class Utils {
         return xEval;
     }
 
-    public static int[] getyEval() {
+    public static double[] getyEval() {
         return yEval;
     }
 
-    public static int[] getyTrain() {
+    public static double[] getyTrain() {
         return yTrain;
+    }
+
+    /**
+     * 将数据进行标准化
+     * @param data 待标准化数据
+     */
+    public static void standardlization(double[][] data) {
+        int m = data.length;
+        int n = data[0].length;
+        // TODO: 对数据进行标准化
+    }
+
+    /**
+     * 将数据进行归一化
+     * @param data 待归一化数据
+     */
+    public static double[][] getNormalizationParameters(double[][] data) {
+        int m = data.length;
+        int n = data[0].length;
+        double[] min = new double[n], max = new double[n];
+        double[][] parameters = new double[n][];
+        for (int i = 0; i < n; i++){
+            min[i] = 1.0 / 0.0;
+            max[i] = -1.0 / 0.0;
+            for (int k = 0; k < m; k++) {
+                if (data[k][i] < min[i]) {
+                    min[i] = data[k][i];
+                }
+                if (data[k][i] > max[i]) {
+                    max[i] = data[k][i];
+                }
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            parameters[i] = new double[2];
+            parameters[i][0] = min[i];
+            parameters[i][1] = max[i] - min[i];
+        }
+        return parameters;
     }
 }

@@ -1,8 +1,6 @@
 package algo.linear;
 
-import algo.Utils;
-
-import javax.sound.sampled.Line;
+import algo.utilities.Helper;
 
 public class LinearRegression {
     private static final double eps = 1e-12;
@@ -79,7 +77,7 @@ public class LinearRegression {
             if (temp < 0) {
                 break;
             }
-            if (i % 100 == 0 && verbose) {
+            if ((i + 1) % 100 == 0 && verbose) {
                 System.out.println(String.format("iteration:[%d/%d], current loss: %.10f", iter, maxIter, currentLoss));
             }
         }
@@ -102,7 +100,7 @@ public class LinearRegression {
             weights[i] = 1.0 / (i + 1);
         }
         if (normalization) {
-            normalizationParameters = Utils.getNormalizationParameters(xTrain);
+            normalizationParameters = Helper.getNormalizationParameters(xTrain);
         } else {
             normalizationParameters = null;
         }

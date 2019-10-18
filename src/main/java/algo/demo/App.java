@@ -2,7 +2,7 @@ package algo.demo;
 
 import algo.linear.LinearRegression;
 import algo.linear.LogisticRegression;
-import algo.Utils;
+import algo.utilities.Helper;
 
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -15,13 +15,13 @@ public class App{
         int k = scanner.nextInt();
         switch (k) {
             case 1: {
-                LogisticRegression logisticRegression = new LogisticRegression(1e-3, 2000000,true, false);
-                Utils.readClassificationData("iris", 2);
-                Utils.splitTrainAndTest(0.2, true);
-                double[][] xTrain = Utils.getxTrain();
-                double[][] xEval = Utils.getxEval();
-                double[] yTrain2 = Utils.getyTrain();
-                double[] yEval2 = Utils.getyEval();
+                LogisticRegression logisticRegression = new LogisticRegression(1e-3, 20000,true, false);
+                Helper.readClassificationData("banknote", 2);
+                Helper.splitTrainAndTest(0.2, true);
+                double[][] xTrain = Helper.getxTrain();
+                double[][] xEval = Helper.getxEval();
+                double[] yTrain2 = Helper.getyTrain();
+                double[] yEval2 = Helper.getyEval();
                 int [] yTrain = new int[yTrain2.length];
                 int [] yEval = new int[yEval2.length];
                 for (int i = 0; i < yTrain.length; i++) {
@@ -47,13 +47,13 @@ public class App{
         switch (k) {
             case 1: {
                 // LinearRegression
-                Utils.readRegressionData("boston");
-                Utils.splitTrainAndTest(0.2, false);
-                double[][] xTrain = Utils.getxTrain();
-                double[][] xEval = Utils.getxEval();
-                double[] yTrain = Utils.getyTrain();
-                double[] yEval = Utils.getyEval();
-                LinearRegression linearRegression = new LinearRegression(1e-4, 10000, true, true, true);
+                Helper.readRegressionData("protein");
+                Helper.splitTrainAndTest(0.2, false);
+                double[][] xTrain = Helper.getxTrain();
+                double[][] xEval = Helper.getxEval();
+                double[] yTrain = Helper.getyTrain();
+                double[] yEval = Helper.getyEval();
+                LinearRegression linearRegression = new LinearRegression(1e-3, 5000, true, true, true);
                 linearRegression.fit(xTrain, yTrain);
                 System.out.println(String.format("score on train set: %.5f", linearRegression.score(xTrain, yTrain)));
                 System.out.println(String.format("score on eval set: %.5f", linearRegression.score(xEval, yEval)));

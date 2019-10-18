@@ -1,10 +1,10 @@
-package algo;
+package algo.utilities;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-public class Utils {
+public class Helper {
     private static double[][] data;
     private static String[] rawLabels;
     private static double[] y;
@@ -18,20 +18,30 @@ public class Utils {
     public static void readClassificationData(String dataName, int classNum) throws FileNotFoundException {
         String line = null;
         String[] tmp = null;
-        if (dataName.equals("iris")) {
+        if (dataName.equals("iris") || dataName.equals("banknote")) {
+            System.out.println(String.format("dataName: %s", dataName));
             class2indices = new HashMap<>();
             // 获取数据的条数
             nRows = 0;
-            FileInputStream fileInputStream = new FileInputStream("./data/iris.data");
+            FileInputStream fileInputStream = null;
+            if (dataName.equals("iris")) {
+                fileInputStream = new FileInputStream("./data/iris.data");
+            } else if (dataName.equals("banknote")) {
+                fileInputStream = new FileInputStream("./data/banknote_authentication.txt");
+            }
             Scanner scanner = new Scanner(fileInputStream);
             while (scanner.hasNext()) {
                 nRows++;
                 line = scanner.nextLine();
             }
             featureNum = line.trim().split(",").length - 1;
-            System.out.println(String.format("iris data has %d records", nRows));
+            System.out.println(String.format("%s has %d records", dataName, nRows));
             // 解析数据
-            fileInputStream = new FileInputStream("./data/iris.data");
+            if (dataName.equals("iris")){
+                fileInputStream = new FileInputStream("./data/iris.data");
+            } else if (dataName.equals("banknote")) {
+                fileInputStream = new FileInputStream("./data/banknote_authentication.txt");
+            }
             scanner = new Scanner(fileInputStream);
             data = new double[nRows][featureNum];
             rawLabels = new String[nRows];
@@ -119,33 +129,40 @@ public class Utils {
 
     public static void readRegressionData(String dataName) throws FileNotFoundException {
         String line = null;
+        // to get the nLines
+        nRows = 0;
+        FileInputStream fileInputStream = null;
         if (dataName.equals("boston")) {
-            // to get the nLines
-            nRows = 0;
-            FileInputStream fileInputStream = new FileInputStream("./data/housing.data");
-            Scanner scanner = new Scanner(fileInputStream);
-            while (scanner.hasNextLine()) {
-                nRows++;
-                line = scanner.nextLine();
-            }
-            featureNum = line.trim().split(",").length - 1;
-            System.out.println(String.format("boston housing data has %d records", nRows));
-            // parse data
             fileInputStream = new FileInputStream("./data/housing.data");
-            scanner = new Scanner(fileInputStream);
-            data = new double[nRows][featureNum];
-            y = new double[nRows];
-            int index = 0;
-            String [] tmp = null;
-            while (scanner.hasNextLine()) {
-                line = scanner.nextLine();
-                tmp = line.trim().split(",");
-                for (int i = 0; i < featureNum; i++) {
-                    data[index][i] = Double.valueOf(tmp[i]);
-                }
-                y[index] = Double.valueOf(tmp[featureNum]);
-                index++;
+        } else if (dataName.equals("protein")) {
+            fileInputStream = new FileInputStream("./data/CASP.csv");
+        }
+        Scanner scanner = new Scanner(fileInputStream);
+        while (scanner.hasNextLine()) {
+            nRows++;
+            line = scanner.nextLine();
+        }
+        featureNum = line.trim().split(",").length - 1;
+        System.out.println(String.format("%s has %d records",dataName , nRows));
+        // parse data
+        if (dataName.equals("boston")) {
+            fileInputStream = new FileInputStream("./data/housing.data");
+        } else if (dataName.equals("protein")) {
+            fileInputStream = new FileInputStream("./data/CASP.csv");
+        }
+        scanner = new Scanner(fileInputStream);
+        data = new double[nRows][featureNum];
+        y = new double[nRows];
+        int index = 0;
+        String [] tmp = null;
+        while (scanner.hasNextLine()) {
+            line = scanner.nextLine();
+            tmp = line.trim().split(",");
+            for (int i = 0; i < featureNum; i++) {
+                data[index][i] = Double.valueOf(tmp[i]);
             }
+            y[index] = Double.valueOf(tmp[featureNum]);
+            index++;
         }
     }
 
@@ -195,7 +212,7 @@ public class Utils {
             indices[i] = i;
         }
         if (shuffle) {
-            Utils.shuffle(indices);
+            Helper.shuffle(indices);
         }
         for (int i = 0; i < trainNum; i++) {
             xTrain[i] = data[indices[i]];

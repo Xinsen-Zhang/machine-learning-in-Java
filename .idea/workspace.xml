@@ -2,11 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1b1a09c3-d51d-48a1-a537-b240de89850b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/machine-learning-in-Java.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/machine-learning-in-Java.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/algo/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/algo/utilities/Helper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/algo/demo/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/algo/demo/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/algo/linear/LinearRegression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/algo/linear/LinearRegression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/algo/utilities/Algebra.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/algo/utilities/Algebra.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/algo/utilities/Matrix.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/algo/utilities/Matrix.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -128,7 +130,7 @@
       <workItem from="1571213701896" duration="2336000" />
       <workItem from="1571281811187" duration="3215000" />
       <workItem from="1571287398786" duration="10210000" />
-      <workItem from="1571315757578" duration="16499000" />
+      <workItem from="1571315757578" duration="19967000" />
     </task>
     <task id="LOCAL-00001" summary="增加ignore文件">
       <created>1571213879800</created>
@@ -171,7 +173,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/algo/demo/App.java</url>
-          <line>59</line>
+          <line>60</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

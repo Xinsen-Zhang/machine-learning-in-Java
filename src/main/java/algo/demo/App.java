@@ -2,6 +2,7 @@ package algo.demo;
 
 import algo.linear.LinearRegression;
 import algo.linear.LogisticRegression;
+import algo.utilities.Algebra;
 import algo.utilities.Helper;
 
 import java.io.FileNotFoundException;
@@ -75,6 +76,12 @@ public class App{
         Scanner scanner = new Scanner(System.in);
         int k = scanner.nextInt();
         switch (k) {
+            case 0: {
+                System.out.println("测试专用case");
+                double[][] matrix1 = Algebra.createRandoms(200,300), matrix2 = Algebra.createRandoms(300, 500);
+                Algebra.print(Algebra.dot(matrix1, matrix2));
+                break;
+            }
             case 1: {
                 classificationTask(scanner);
                 break;

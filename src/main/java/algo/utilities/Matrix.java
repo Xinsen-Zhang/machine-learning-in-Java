@@ -66,6 +66,21 @@ public class Matrix {
         return new Matrix(result);
     }
 
+    public Matrix dot(Matrix matrix) throws Exception {
+        return mmul(matrix);
+    }
+
+    public Matrix copy(Matrix matrix) {
+        int m = getRowCount(), n = getColCount();
+        double[][] data = new double[m][n];
+        for (int i = 0; i < m;i++) {
+            for (int j = 0; j < n; j++) {
+                data[i][j] = this.data[i][j];
+            }
+        }
+        return new Matrix(data);
+    }
+
     public Matrix transpose() {
         int m = getRowCount(), n = getColCount();
         double[][] result = new double[n][m];
